@@ -6,7 +6,7 @@ pipeline {
 			steps {
 				sleep(time:1,unit:"SECONDS")
 				echo "${GIT_COMMIT}"
-				sh 'git rev-list --left-right --count origin/master...origin/branch1 | xargs exit'
+				sh 'exit `git rev-list --left-right --count origin/master...origin/branch1`'
 			}
 		}
 	}
