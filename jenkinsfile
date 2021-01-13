@@ -6,7 +6,7 @@ pipeline {
 			steps {
 				sleep(time:1,unit:"SECONDS")
 				echo '${GIT_COMMIT}'
-				sh   'exit `git rev-list --left-right --count origin/master...origin/$(git branch --show-current) | awk "{print $1}"`'
+				sh   'exit `git rev-list --left-right --count origin/master..."${BRANCH_NAME}" | awk "{print $1}"`'
 			}
 		}
 	}
