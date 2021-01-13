@@ -1,12 +1,12 @@
 pipeline {
 	agent any
-	environment { STATE = 0 }
 	stages {
 		stage('test') {
+			environment { STATE = 0 }
 			options { retry(2) }
 			steps {
 				when { equals expected: 0, actual: env.STATE }
-				environment { STATE = 1 }
+				sh 'STATE=1'
 				error ('this is just a test')
 			}
 		}
