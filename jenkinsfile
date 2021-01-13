@@ -1,6 +1,5 @@
 pipeline {
 	agent any
-	environment { STATE = 'try' }
 	stages {
 		stage('test') {
 			options { retry(2) }
