@@ -6,7 +6,8 @@ pipeline {
 			options { retry(2) }
 			when { not { equals expected: 'skip', actual: env.STATE } }
 			steps {
-				echo 'STATE is ${STATE}'
+				echo "STATE is ${STATE}"
+				sh 'echo $STATE'
 				sh 'STATE=skip'
 				error ('this is just a test')
 			}
