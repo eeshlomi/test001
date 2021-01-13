@@ -5,7 +5,7 @@ pipeline {
 			steps {
 				sleep(time:1,unit:"SECONDS")
 				echo "${GIT_COMMIT}"
-				sh 'printenv'
+				sh 'printenv|sort'
 			}
 		}
 	}
