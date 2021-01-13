@@ -3,8 +3,9 @@ pipeline {
 	stages {
 		stage('test') {
 			options { retry(2) }
-			error ('this is just a test')
+			steps {
+				error ('this is just a test')
+			}
 		}
 	}
 }
-
