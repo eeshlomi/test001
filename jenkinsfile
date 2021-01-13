@@ -6,7 +6,8 @@ pipeline {
 			steps {
 				sleep(time:1,unit:"SECONDS")
 				echo "${GIT_COMMIT}"
-				sh 'git rev-list --left-right --count origin/master..."${BRANCH_NAME}" | xargs exit'
+				sh 'git merge'
+				sh 'git rev-list --left-right --count origin/master...branch1 | xargs exit'
 			}
 		}
 	}
