@@ -3,7 +3,9 @@ pipeline {
 	stages {
 		stage('test') {
 			steps {
+				sleep(time:1,unit:"SECONDS")
 				echo "${GIT_COMMIT}"
+				env
 			}
 		}
 	}
