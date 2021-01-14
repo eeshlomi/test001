@@ -13,7 +13,7 @@ pipeline {
 						echo master is ahead, merging... && \
 						git merge origin/master -m merged-by-jenkins && \
 						echo "Failing the stage for a retry after merge"
-						# need a push without webhook ?!
+						// need a push without webhook ?!
 					exit $RETVAL '''
 			}
 		}
@@ -23,7 +23,7 @@ pipeline {
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
 					git checkout origin/master
 					git merge "${GIT_BRANCH}" -m merged-by-jenkins '''
-				# need a push without webhook ?!
+				// need a push without webhook ?!
 			}
 		}
 	}
