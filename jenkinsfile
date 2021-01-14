@@ -4,7 +4,7 @@ pipeline {
 		stage('test') {
 			options { retry(2) }
 			steps {
-				sleep(time:1,unit:"SECONDS")
+				sleep(time:100,unit:"SECONDS")
 				echo "Commit hash is ${GIT_COMMIT}"
 				sh '''#!/bin/bash
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
