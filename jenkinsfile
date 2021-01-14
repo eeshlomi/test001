@@ -6,8 +6,13 @@ pipeline {
 			steps {
 				sleep(time:1,unit:"SECONDS")
 				echo "Commit hash is ${GIT_COMMIT}"
-				sh "git rev-parse ${GIT_BRANCH}^{commit}"
-				sh "exit `git rev-list --left-right --count origin/master...${GIT_BRANCH}`"
+				sh "/home/ubuntu/scripts/merge-from-master.sh ${BRANCH_NAME}`"
+			}
+		}
+		stage('merge-to-master') {
+			when { not { branch 'master' } }
+			steps {
+				echo "This is a branch"
 			}
 		}
 	}
