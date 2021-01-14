@@ -12,10 +12,10 @@ pipeline {
 					[ "${RETVAL}" != "0" ] && \
 						echo master is ahead, merging... && \
 						git merge origin/master && \
+						git show-ref && \
 						git add --all && \
 						git commit -am merged-by-jenkins && \
-						LOCAL_BRANCH=`echo "${GIT_BRANCH}" | awk -F'/' '{print $1}'` && \
-						git push "${GIT_URL}" refs/remotes/"${GIT_BRANCH}" && \
+						git push "${GIT_URL}" +refs/heads/*:refs/remotes/origin/* && \
 						echo "Failing the stage for a retry after merge"
 					exit $RETVAL
 				'''
@@ -25,12 +25,7 @@ pipeline {
 			steps {
 				sh '''#!/bin/bash
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
-					git checkout origin/master
-					git merge "${GIT_BRANCH}"
-					git show-ref
-					git add --all
-					git commit -am merged-by-jenkins
-					git push "${GIT_URL}" refs/remotes/origin/master*
+					git push "${GIT_URL}" +refs/remotes/"${GIT_BRANCH}":refs/remotes/origin/master
 					exit 0
 				'''
 			}
