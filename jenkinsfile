@@ -15,7 +15,7 @@ pipeline {
 						git add --all && \
 						git commit -am merged-by-jenkins && \
 						LOCAL_BRANCH=`echo "${GIT_BRANCH}" | awk -F'/' '{print $1}'` && \
-						git push "${GIT_URL}" +refs/heads/*:refs/remotes/origin/* && \
+						git push "${GIT_URL}" refs/remotes/"${GIT_BRANCH}" && \
 						echo "Failing the stage for a retry after merge"
 					exit $RETVAL
 				'''
@@ -30,7 +30,7 @@ pipeline {
 					git show-ref
 					git add --all
 					git commit -am merged-by-jenkins
-					git push "${GIT_URL}" +refs/heads/*:refs/remotes/origin/*
+					git push "${GIT_URL}" refs/remotes/origin/master*
 					exit 0
 				'''
 			}
