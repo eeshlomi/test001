@@ -6,7 +6,9 @@ pipeline {
 			steps {
 				sleep(time:1,unit:"SECONDS")
 				echo "Commit hash is ${GIT_COMMIT}"
-				sh "/home/ubuntu/scripts/merge-from-master.sh ${GIT_BRANCH}`"
+				sh '''#!/bin/bash
+					echo branch name is ${GIT_BRANCH}
+				'''
 			}
 		}
 		stage('merge-to-master') {
