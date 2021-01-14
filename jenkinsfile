@@ -9,8 +9,7 @@ pipeline {
 				sh '''#!/bin/bash
 					[ "${GIT_BRANCH}" = "master" ] && exit 0
 					RETVAL=`git rev-list --left-right --count origin/master... | awk '{print $1}'`
-					echo RETVAL is "${RETVAL}"
-					[ ${RETVAL} > 0 ] && echo master is ahead
+					[ "${RETVAL}" != "0" ] && echo master is ahead
 					exit $RETVAL
 				'''
 			}
