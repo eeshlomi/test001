@@ -18,8 +18,9 @@ pipeline {
 			}
 		}
 		stage('merge-to-master') {
+			when { not { branch "*master" } }
 			steps {
-				echo "${GIT_BRANCH}"
+				echo "Running this stage for a ${GIT_BRANCH}"
 			}
 		}
 	}
