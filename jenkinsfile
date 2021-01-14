@@ -7,8 +7,9 @@ pipeline {
 				sleep(time:1,unit:"SECONDS")
 				echo "Commit hash is ${GIT_COMMIT}"
 				sh '''#!/bin/bash
-					pwd
-					[ "${GIT_BRANCH}" = "master" ] && exit 0
+					cat ../../tmp/test
+					[ "${GIT_BRANCH}" = "master" ] && exit 1  # should be the oppsite
+					exit 0
 				'''
 			}
 		}
