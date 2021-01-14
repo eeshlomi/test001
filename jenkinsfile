@@ -7,7 +7,7 @@ pipeline {
 				sleep(time:1,unit:"SECONDS")
 				echo "Commit hash is ${GIT_COMMIT}"
 				sh '''#!/bin/bash
-					[ "${GIT_BRANCH}" = "master" ] && exit 0
+					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
 					RETVAL=`git rev-list --left-right --count origin/master... | awk '{print $1}'`
 					[ "${RETVAL}" != "0" ] && echo master is ahead
 					exit $RETVAL
