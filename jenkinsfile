@@ -9,13 +9,15 @@ pipeline {
 				sh '''#!/bin/bash
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
 					RETVAL=`git rev-list --left-right --count origin/master... | awk '{print $1}'`
-					[ "${RETVAL}" != "0" ] && echo master is ahead
+					[ "${RETVAL}" != "0" ] && \
+						echo master is ahead && \
+						echo merge from master
 					exit $RETVAL
 				'''
 			}
 		}
 		stage('merge-to-master') {
-			when { not { branch 'master' } }
+			when { expression { GIT_BRANCH != "origin/master" } }
 			steps {
 				echo "This is a branch"
 			}
