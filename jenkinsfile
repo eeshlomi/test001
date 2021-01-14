@@ -11,15 +11,15 @@ pipeline {
 					RETVAL=`git rev-list --left-right --count origin/master... | awk '{print $1}'`
 					[ "${RETVAL}" != "0" ] && \
 						echo master is ahead, merging... && \
-						git merge origin/master
+						git merge origin/master && \
+						echo "Failing the stage for a retry after merge"
 					exit $RETVAL
 				'''
 			}
 		}
 		stage('merge-to-master') {
-			when { expression { "${GIT_BRANCH}" != "origin/master" } }
 			steps {
-				echo "This is a branch"
+				echo "${GIT_BRANCH}"
 			}
 		}
 	}
