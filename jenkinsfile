@@ -12,6 +12,7 @@ pipeline {
 					[ "${RETVAL}" != "0" ] && \
 						echo master is ahead, merging... && \
 						git merge origin/master && \
+						git add --all && \
 						git commit -am merged-by-jenkins && \
 						git push "${GIT_BRANCH}" && \
 						echo "Failing the stage for a retry after merge"
@@ -25,6 +26,7 @@ pipeline {
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
 					git checkout origin/master
 					git merge "${GIT_BRANCH}"
+					git add --all
 					git commit -am merged-by-jenkins
 					git push origin/master
 					exit 0
