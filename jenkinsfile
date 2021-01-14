@@ -12,7 +12,9 @@ pipeline {
 					[ "${RETVAL}" != "0" ] && \
 						echo master is ahead, merging... && \
 						git merge origin/master -m merged-by-jenkins
-					git push --force "${GIT_URL}" +refs/heads/*:refs/heads/*
+						git add --all
+						git commit -m merged-by-jenkins
+						git push --force "${GIT_URL}" +refs/heads/*:refs/heads/*
 					exit $RETVAL
 				'''
 			}
@@ -23,6 +25,8 @@ pipeline {
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
 					git checkout master
 					git merge "${GIT_BRANCH}" -m merged-by-jenkins
+					git add --all
+					git commit -m merged-by-jenkins
 					git push --force "${GIT_URL}" +refs/heads/*:refs/heads/*
 				'''
 			}
