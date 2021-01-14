@@ -15,6 +15,7 @@ pipeline {
 						git show-ref && \
 						git add --all && \
 						git commit -am merged-by-jenkins && \
+						env|sort && \\
 						git push "${GIT_URL}" +refs/heads/*:refs/remotes/origin/* && \
 						echo "Failing the stage for a retry after merge"
 					exit $RETVAL
@@ -25,6 +26,7 @@ pipeline {
 			steps {
 				sh '''#!/bin/bash
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
+					env|sort && \\
 					git push "${GIT_URL}" +refs/remotes/"${GIT_BRANCH}":refs/remotes/origin/master
 					exit 0
 				'''
