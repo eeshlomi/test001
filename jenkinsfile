@@ -11,8 +11,7 @@ pipeline {
 					RETVAL=`git rev-list --left-right --count origin/master... | awk '{print $1}'`
 					[ "${RETVAL}" != "0" ] && \
 						echo master is ahead, merging... && \
-						git merge origin/master -am merged-by-jenkins && \
-						git show-ref && \
+						git merge origin/master -m merged-by-jenkins && \
 						git push "${GIT_URL}" +refs/heads/*:refs/remotes/* && \
 						echo "Failing the stage for a retry after merge"
 					exit $RETVAL
@@ -24,9 +23,8 @@ pipeline {
 				sh '''#!/bin/bash
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
 					git checkout master
-					git merge "${GIT_BRANCH}" -am merged-by-jenkins
-					git push "${GIT_URL}" +refs/remotes/"${GIT_BRANCH}":refs/remotes/origin/master
-					exit 0
+					git merge "${GIT_BRANCH}" -m merged-by-jenkins
+					git push "${GIT_URL}" +refs/heads/*:refs/remotes/*
 				'''
 			}
 		}
