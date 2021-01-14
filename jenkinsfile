@@ -6,7 +6,7 @@ pipeline {
 			steps {
 				sleep(time:1,unit:"SECONDS")
 				echo "Commit hash is ${GIT_COMMIT}"
-				sh "exit `git rev-list --left-right --count origin/master...origin/${BRANCH_NAME}`"
+				sh "exit `git rev-list --left-right --count origin/master...origin/${GIT_BRANCH}`"
 			}
 		}
 	}
