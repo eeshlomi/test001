@@ -8,11 +8,13 @@ pipeline {
 				echo "Commit hash is ${GIT_COMMIT}"
 				sh '''#!/bin/bash
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
+					env
 					RETVAL=`git rev-list --left-right --count origin/master... | awk '{print $1}'`
 					[ "${RETVAL}" != "0" ] && \
 						echo master is ahead, merging... && \
-						git merge origin/master -m merged-by-jenkins && \
-						git push origin HEAD:"${GIT_BRANCH}" && \
+						git merge origin/master && \
+						git commit -am merged-by-jenkins && \
+						git push "${GIT_BRANCH}" && \
 						echo "Failing the stage for a retry after merge"
 					exit $RETVAL '''
 			}
@@ -22,8 +24,10 @@ pipeline {
 				sh '''#!/bin/bash
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
 					git checkout origin/master
-					git merge "${GIT_BRANCH}" -m merged-by-jenkins && \
-					git push origin HEAD:"${GIT_BRANCH}" '''
+					git merge "${GIT_BRANCH}"
+					git commit -am merged-by-jenkins
+					git push origin/master
+					exit 0 '''
 			}
 		}
 	}
