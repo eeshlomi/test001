@@ -14,7 +14,8 @@ pipeline {
 						git merge origin/master && \
 						git add --all && \
 						git commit -am merged-by-jenkins && \
-						git push "${GIT_BRANCH}" && \
+						LOCAL_BRANCH=`echo "${GIT_BRANCH}" | awk -F'/' '{print $1}`'
+						git push "${GIT_URL}" "${LOCAL_BRANCH}" && \
 						echo "Failing the stage for a retry after merge"
 					exit $RETVAL
 				'''
@@ -28,7 +29,7 @@ pipeline {
 					git merge "${GIT_BRANCH}"
 					git add --all
 					git commit -am merged-by-jenkins
-					git push origin/master
+					git push "${GIT_URL}" master
 					exit 0
 				'''
 			}
