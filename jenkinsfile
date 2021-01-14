@@ -13,13 +13,13 @@ pipeline {
 						echo master is ahead, merging... && \
 						git merge origin/master -am merged-by-jenkins && \
 						git show-ref
-						git push "${GIT_URL}" +refs/heads/*:refs/remotes/*" && \
+						git push "${GIT_URL}" +refs/heads/*:refs/remotes/*	" && \
 						echo "Failing the stage for a retry after merge"
 					exit $RETVAL
 				'''
 			}
 		}
-		stage('merge-to-master')
+		stage('merge-to-master') {
 			steps {
 				sh '''#!/bin/bash
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
