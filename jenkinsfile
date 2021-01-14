@@ -12,7 +12,7 @@ pipeline {
 					[ "${RETVAL}" != "0" ] && \
 						echo master is ahead, merging... && \
 						git merge origin/master -m merged-by-jenkins && \
-						git push "${GIT_URL}" +refs/heads/*:refs/remotes/* && \
+						git push --force "${GIT_URL}" +refs/heads/*:refs/heads/* && \
 						echo "Failing the stage for a retry after merge"
 					exit $RETVAL
 				'''
@@ -24,7 +24,7 @@ pipeline {
 					[ "${GIT_BRANCH}" = "origin/master" ] && exit 0
 					git checkout master
 					git merge "${GIT_BRANCH}" -m merged-by-jenkins
-					git push "${GIT_URL}" +refs/heads/*:refs/remotes/*
+					git push --force "${GIT_URL}" +refs/heads/*:refs/heads/*
 				'''
 			}
 		}
